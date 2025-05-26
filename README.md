@@ -1,6 +1,7 @@
 # operationalizing-ai-project
 
 **Health Live Chat** is an AI-powered conversational assistant that helps users ask general health-related questions and receive instant, informative answers. It uses large language models (LLMs) to provide context-aware, privacy-conscious, and user-friendly health information responses.
+[HealthLiveChat](https://healthlivechat.onrender.com/)
 
 ## Project Goals
 - Build and deploy a conversational health assistant
