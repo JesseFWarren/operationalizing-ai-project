@@ -10,7 +10,7 @@ if not OPENAI_API_KEY:
     raise ValueError("Missing OpenAI API Key. Set OPENAI_API_KEY as an environment variable.")
 client = OpenAI(api_key=OPENAI_API_KEY)
 
-def ask_medical_chatbot(user_query):
+def generate_response_with_openai(user_query):
     """
     Retrieves relevant Mayo Clinic disease context and queries GPT-4.
     """
@@ -35,7 +35,7 @@ def ask_medical_chatbot(user_query):
         Answer:
         """
 
-        # Query GPT-4
+        # query GPT-4
         response = client.chat.completions.create(
             model="gpt-4",
             messages=[
@@ -51,4 +51,4 @@ def ask_medical_chatbot(user_query):
 
 if __name__ == "__main__":
     user_input = input("Describe your symptoms: ")
-    print(ask_medical_chatbot(user_input))
+    print(generate_response_with_openai(user_input))

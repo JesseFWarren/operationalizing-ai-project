@@ -12,16 +12,16 @@
 ## Weekly Breakdown
 
 ### Week 1: Foundational Conversational AI (OpenAI)
-- Implement initial version of the Health Live Chat assistant
-- Use OpenAI GPT model to power health-related conversations
-- Build core message loop and response logic
-- Document basic usage and architecture
+- Implemented initial version of the Health Live Chat assistant
+- Used OpenAI GPT model to power health-related conversations
+- Built core message loop and response logic
+- Documented basic usage and architecture
 
 ### Week 2: Modular Pipeline & Bedrock Integration
-- Refactor chatbot into a modular pipeline (`pipeline.py`)
+- Refactored chatbot into a modular pipeline (`pipeline.py`)
   - Input → moderation → model → logging → output
-- Implement retry logic and logging to `chatlog.csv`
-- Switch from OpenAI to Amazon Bedrock
+- Implemented retry logic and logging to `chatlog.csv`
+- Structured code to easily be switched to bedrock once I recieve access
 
 ### Week 3: Enterprise Deployment & Security
 - Deploy the backend using AWS App Runner
