@@ -24,10 +24,10 @@
 - Structured code to easily be switched to bedrock once I recieve access
 
 ### Week 3: Enterprise Deployment & Security
-- Deploy the backend using AWS App Runner
-- Add token-based authentication to secure endpoints
-- Create `deployment_guide.md` with setup instructions
-- Begin implementing basic audit logging for user activity
+- Deployed the backend using AWS App Runner: Waiting for permission from TA 
+  - Used Render for now
+- Added token-based authentication to secure endpoints
+- Implemented basic audit logging for user activity
 
 ### Week 4: Usage Analytics & Dashboard
 - Track key metrics:
