@@ -30,12 +30,12 @@
 - Implemented basic audit logging for user activity
 
 ### Week 4: Usage Analytics & Dashboard
-- Track key metrics:
+- Tracked key metrics:
   - Number of queries
   - Common keywords
   - Average response length
-- Visualize logs with a basic dashboard (Streamlit + CSV analysis)
-- Export log data for performance tracking
+- Visualized logs with a basic dashboard (Streamlit + CSV analysis)
+- Saved log data to S3 bucket and pulled into Streamlit for performance tracking
 
 ### Week 5: Safety Filters & Generative AI Ethics
 - Implement basic content moderation for unsafe inputs
