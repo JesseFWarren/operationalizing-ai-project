@@ -125,3 +125,9 @@ body {
 .chat-form button:hover {
   background: #0056b3;
 }
+
+.uploaded-img {
+  max-width: 200px;
+  border-radius: 8px;
+  margin-top: 5px;
+}

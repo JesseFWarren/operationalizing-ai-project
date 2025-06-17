@@ -5,18 +5,14 @@ from src.retrieval import search
 from openai import OpenAI
 import boto3
 import re
+from src.model_api import generate_response, MODEL_SOURCE
+from src.vision_model import describe_image
 
 USE_BEDROCK = False
 S3_BUCKET = os.getenv("S3_BUCKET")
 REGION = os.getenv("AWS_REGION", "us-east-1")
 s3 = boto3.client("s3", region_name=REGION)
-
-if USE_BEDROCK:
-    from src.bedrock_model import generate_response_with_bedrock as generate_response
-    MODEL_SOURCE = "Bedrock"
-else:
-    from src.chatbot import generate_response_with_openai as generate_response
-    MODEL_SOURCE = "OpenAI"
+CACHE = {}
 
 def moderate_input(user_query):
     banned_keywords = [
@@ -79,7 +75,7 @@ def log_audit_entry(user_query, response, path="audit_log.csv"):
 
     append_to_s3_csv("audit_log.csv", row)
 
-def run_pipeline(user_query, retries=3):
+def run_pipeline(user_query, image_path=None, retries=3):
     """
     Full chatbot pipeline:
     - Moderate input
@@ -91,14 +87,21 @@ def run_pipeline(user_query, retries=3):
     """
     if not moderate_input(user_query):
         return "Your message includes flagged content. Please try again."
+    
+    cleaned_query = strip_pii(user_query)
+
+    if cleaned_query in CACHE:
+        return CACHE[cleaned_query]
 
     for attempt in range(retries):
         try:
-            cleaned_query = strip_pii(user_query)
-            context = "\n".join(search(cleaned_query)) or "No relevant context found."
-            response = generate_response(cleaned_query, context)
-            log_interaction(cleaned_query, response)
-            log_audit_entry(cleaned_query, response)
+            image_caption = describe_image(image_path) if image_path else ""
+            combined_query = f"{image_caption}\n\n{cleaned_query}".strip()
+            context = "\n".join(search(combined_query)) or "No relevant context found."
+            response = generate_response(combined_query, context)
+            log_interaction(combined_query, response)
+            log_audit_entry(combined_query, response)
+            CACHE[cleaned_query] = response
             return response
         except Exception as e:
             if attempt < retries - 1:

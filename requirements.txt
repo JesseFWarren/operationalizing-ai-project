@@ -13,3 +13,6 @@ huggingface_hub==0.20.3
 boto3==1.28.57
 streamlit==1.35.0
 pandas==2.2.2
+torch>=2.0.0
+transformers>=4.36.0
+Pillow>=9.0.0

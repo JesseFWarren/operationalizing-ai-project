@@ -43,8 +43,15 @@
 - Added disclaimers and tuned prompts to reduce hallucination
 - Strengthened user safety and aligned with Responsible AI practices
 
-### Week 6: Final Polish
-- Finalize documentation:
+### Week 6: Caching and Multimodal Integration
+- Implemented Caching
+- Added image/text multi-modal pipeline
+- Created api wrapper
+
+### Final Polish
+- Tied everything into bedrock and apprunner and S3 bucket
+- System Diagram
+- Finalize documentation and how to use guide:
   - `README.md`
   - `api_docs.md`
   - `security_and_ethics.md`
