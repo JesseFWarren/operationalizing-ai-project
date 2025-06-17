@@ -4,6 +4,7 @@ import time
 from src.retrieval import search
 from openai import OpenAI
 import boto3
+import re
 
 USE_BEDROCK = False
 S3_BUCKET = os.getenv("S3_BUCKET")
@@ -18,11 +19,30 @@ else:
     MODEL_SOURCE = "OpenAI"
 
 def moderate_input(user_query):
-    banned_keywords = ["suicide", "fuck"]
+    banned_keywords = [
+    "suicide", "kill myself", "end my life", "self-harm", "cut myself", "hurt myself",
+    "take my life", "overdose", "bleed out", "jump off", "hang myself",
+    "harm others", "kill someone", "shoot", "stab", "choke", "murder", "assault", 
+    "bomb", "terrorist", "massacre", "school shooting", "arson", "explosive",
+    "abuse", "child abuse", "rape", "molest", "sexual assault", "beat", "domestic violence",
+    "incest", "harassment", "grooming", "pedophile", "predator",
+    "porn", "sex", "sexy", "nude", "nudes", "blowjob", "dick", "vagina", "penis", 
+    "fetish", "masturbate", "onlyfans", "stripper",
+    "cocaine", "meth", "heroin", "weed", "lsd", "ecstasy", "sell drugs", 
+    "buy drugs", "illegal prescription", "fentanyl",
+    "racist", "nazi", "white power", "kkk", "hate crime", "bigot", "slur", 
+    "homophobic", "transphobic",
+    ]
     for word in banned_keywords:
         if word in user_query.lower():
             return False
     return True
+
+def strip_pii(text):
+    text = re.sub(r"\b[\w.-]+@[\w.-]+\.\w+\b", "[EMAIL]", text)
+    text = re.sub(r"\b\d{3}[-.\s]?\d{2,4}[-.\s]?\d{4}\b", "[PHONE]", text)
+    text = re.sub(r"\b(?:\d[ -]*?){13,16}\b", "[CARD]", text)
+    return text
 
 def append_to_s3_csv(file_key, row):
     try:
@@ -63,6 +83,7 @@ def run_pipeline(user_query, retries=3):
     """
     Full chatbot pipeline:
     - Moderate input
+    - Remove PII
     - Retrieve context
     - Generate response via OpenAI or Bedrock
     - Log both interaction and audit entry
@@ -73,10 +94,11 @@ def run_pipeline(user_query, retries=3):
 
     for attempt in range(retries):
         try:
-            context = "\n".join(search(user_query)) or "No relevant context found."
-            response = generate_response(user_query, context)
-            log_interaction(user_query, response)
-            log_audit_entry(user_query, response)
+            cleaned_query = strip_pii(user_query)
+            context = "\n".join(search(cleaned_query)) or "No relevant context found."
+            response = generate_response(cleaned_query, context)
+            log_interaction(cleaned_query, response)
+            log_audit_entry(cleaned_query, response)
             return response
         except Exception as e:
             if attempt < retries - 1:

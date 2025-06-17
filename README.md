@@ -17,19 +17,19 @@
 - Built core message loop and response logic
 - Documented basic usage and architecture
 
-### Week 2: Modular Pipeline & Bedrock Integration
+### Week 2: Modular Pipeline and Bedrock Integration
 - Refactored chatbot into a modular pipeline (`pipeline.py`)
   - Input → moderation → model → logging → output
 - Implemented retry logic and logging to `chatlog.csv`
 - Structured code to easily be switched to bedrock once I recieve access
 
-### Week 3: Enterprise Deployment & Security
+### Week 3: Enterprise Deployment and Security
 - Deployed the backend using AWS App Runner: Waiting for permission from TA 
   - Used Render for now
 - Added token-based authentication to secure endpoints
 - Implemented basic audit logging for user activity
 
-### Week 4: Usage Analytics & Dashboard
+### Week 4: Usage Analytics and Dashboard
 - Tracked key metrics:
   - Number of queries
   - Common keywords
@@ -37,11 +37,11 @@
 - Visualized logs with a basic dashboard (Streamlit + CSV analysis)
 - Saved log data to S3 bucket and pulled into Streamlit for performance tracking
 
-### Week 5: Safety Filters & Generative AI Ethics
-- Implement basic content moderation for unsafe inputs
-- Strip PII before sending queries to the model
-- Add disclaimers and tune prompts to reduce hallucination
-- Strengthen user safety and align with Responsible AI practices
+### Week 5: Safety Filters and Generative AI Ethics
+- Implemented basic content moderation for unsafe inputs
+- Striped PII before sending queries to the model
+- Added disclaimers and tuned prompts to reduce hallucination
+- Strengthened user safety and aligned with Responsible AI practices
 
 ### Week 6: Final Polish
 - Finalize documentation:
