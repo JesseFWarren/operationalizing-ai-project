@@ -82,8 +82,8 @@ def run_pipeline(user_query, image_path=None, retries=3):
     - Moderate input
     - Remove PII
     - Retrieve context
-    - Generate response via OpenAI or Bedrock
-    - Log both interaction and audit entry
+    - Generate response via OpenAI
+    - Log interaction and audit
     - Retry on failure
     """
     if not user_query or not isinstance(user_query, str):
@@ -94,24 +94,26 @@ def run_pipeline(user_query, image_path=None, retries=3):
 
     cleaned_query = strip_pii(user_query)
 
-    if cleaned_query in CACHE:
-        return CACHE[cleaned_query]
+    # Cache only works for text-only queries
+    cache_key = cleaned_query if not image_path else None
+    if cache_key and cache_key in CACHE:
+        return CACHE[cache_key]
 
     for attempt in range(retries):
         try:
             image_caption = ""
-            if image_path:
-                caption_result = describe_image(image_path)
-                image_caption = caption_result if isinstance(caption_result, str) else ""
+            if image_path and os.path.exists(image_path):
+                image_caption = describe_image(image_path)
 
             combined_query = f"{image_caption}\n\n{cleaned_query}".strip()
             context = "\n".join(search(combined_query)) or "No relevant context found."
             response = generate_response(combined_query, context)
-            
+
             log_interaction(combined_query, response)
             log_audit_entry(combined_query, response)
 
-            CACHE[cleaned_query] = response
+            if cache_key:
+                CACHE[cache_key] = response
             return response
         except Exception as e:
             if attempt < retries - 1:
