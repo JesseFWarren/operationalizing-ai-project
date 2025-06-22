@@ -5,8 +5,7 @@ from src.retrieval import search
 from openai import OpenAI
 import boto3
 import re
-#from src.model_api import generate_response, MODEL_SOURCE
-from src.chatbot import generate_response_with_openai as generate_response
+from src.model_api import generate_response, MODEL_SOURCE
 from src.vision_model import describe_image
 
 USE_BEDROCK = False
@@ -109,8 +108,8 @@ def run_pipeline(user_query, image_path=None, retries=3):
             context = "\n".join(search(combined_query)) or "No relevant context found."
             response = generate_response(combined_query, context)
 
-            #log_interaction(combined_query, response)
-            #log_audit_entry(combined_query, response)
+            log_interaction(combined_query, response)
+            log_audit_entry(combined_query, response)
 
             if cache_key:
                CACHE[cache_key] = response
