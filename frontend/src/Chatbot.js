@@ -9,6 +9,7 @@ const Chatbot = () => {
   const [isTyping, setIsTyping] = useState(false);
 
   const BACKEND_URL = "https://healthlivechatbackend.onrender.com";
+  const API_KEY = "secretkey123"; 
 
   useEffect(() => {
     setMessages([
@@ -41,7 +42,10 @@ const Chatbot = () => {
       if (image) formData.append("image", image);
 
       const res = await axios.post(`${BACKEND_URL}/ask_image`, formData, {
-        headers: { "Content-Type": "multipart/form-data" }
+        headers: {
+          "Content-Type": "multipart/form-data",
+          "x-api-key": API_KEY
+        }
       });
 
       const botMessage = { text: res.data.response, sender: "bot" };
