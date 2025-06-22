@@ -17,7 +17,7 @@ CACHE = {}
 
 def moderate_input(user_query):
     banned_keywords = [
-    "suicide", "kill myself", "end my life", "self-harm", "cut myself", "hurt myself",
+    "fuck", "shit", "hell", "damn" "suicide", "kill myself", "end my life", "self-harm", "cut myself", "hurt myself",
     "take my life", "overdose", "bleed out", "jump off", "hang myself",
     "harm others", "kill someone", "shoot", "stab", "choke", "murder", "assault", 
     "bomb", "terrorist", "massacre", "school shooting", "arson", "explosive",
@@ -36,9 +36,9 @@ def moderate_input(user_query):
     return True
 
 def strip_pii(text):
-    text = re.sub(r"\b[\w.-]+@[\w.-]+\.\w+\b", "[EMAIL]", text)
-    text = re.sub(r"\b\d{3}[-.\s]?\d{2,4}[-.\s]?\d{4}\b", "[PHONE]", text)
-    text = re.sub(r"\b(?:\d[ -]*?){13,16}\b", "[CARD]", text)
+    text = re.sub(r"\b[\w.-]+@[\w.-]+\.\w+\b", "", text)
+    text = re.sub(r"\b\d{3}[-.\s]?\d{2,4}[-.\s]?\d{4}\b", "", text)
+    text = re.sub(r"\b(?:\d[ -]*?){13,16}\b", "", text)
     return text
 
 def append_to_s3_csv(file_key, row):
@@ -95,9 +95,9 @@ def run_pipeline(user_query, image_path=None, retries=3):
     cleaned_query = strip_pii(user_query)
 
     # Cache only works for text-only queries
-    #cache_key = cleaned_query if not image_path else None
-    #if cache_key and cache_key in CACHE:
-    #    return CACHE[cache_key]
+    cache_key = cleaned_query if not image_path else None
+    if cache_key and cache_key in CACHE:
+        return CACHE[cache_key]
 
     for attempt in range(retries):
         try:
@@ -105,15 +105,15 @@ def run_pipeline(user_query, image_path=None, retries=3):
             if image_path and os.path.exists(image_path):
                 image_caption = describe_image(image_path)
 
-            combined_query = cleaned_query #f"{image_caption}\n\n{cleaned_query}".strip()
+            combined_query = f"{image_caption}\n\n{cleaned_query}".strip()
             context = "\n".join(search(combined_query)) or "No relevant context found."
             response = generate_response(combined_query, context)
 
             #log_interaction(combined_query, response)
             #log_audit_entry(combined_query, response)
 
-            #if cache_key:
-            #    CACHE[cache_key] = response
+            if cache_key:
+               CACHE[cache_key] = response
             return response
         except Exception as e:
             if attempt < retries - 1:
