@@ -95,9 +95,9 @@ def run_pipeline(user_query, image_path=None, retries=3):
     cleaned_query = strip_pii(user_query)
 
     # Cache only works for text-only queries
-    cache_key = cleaned_query if not image_path else None
-    if cache_key and cache_key in CACHE:
-        return CACHE[cache_key]
+    #cache_key = cleaned_query if not image_path else None
+    #if cache_key and cache_key in CACHE:
+    #    return CACHE[cache_key]
 
     for attempt in range(retries):
         try:
@@ -109,11 +109,11 @@ def run_pipeline(user_query, image_path=None, retries=3):
             context = "\n".join(search(combined_query)) or "No relevant context found."
             response = generate_response(combined_query, context)
 
-            log_interaction(combined_query, response)
-            log_audit_entry(combined_query, response)
+            #log_interaction(combined_query, response)
+            #log_audit_entry(combined_query, response)
 
-            if cache_key:
-                CACHE[cache_key] = response
+            #if cache_key:
+            #    CACHE[cache_key] = response
             return response
         except Exception as e:
             if attempt < retries - 1:
