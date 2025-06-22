@@ -22,8 +22,11 @@ app.add_middleware(
 
 @app.middleware("http")
 async def check_api_key(request: Request, call_next):
+    if request.method == "OPTIONS":
+        return await call_next(request)
+
     if request.url.path in ["/ask", "/ask_image"]:
-        auth_header = request.headers.get("x-api-key")
+        auth_header = request.headers.get("x-api-key", "").strip()
         if not auth_header or auth_header != API_KEY:
             raise HTTPException(status_code=401, detail="Unauthorized: Invalid or missing API key.")
     return await call_next(request)
