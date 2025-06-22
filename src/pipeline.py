@@ -105,7 +105,7 @@ def run_pipeline(user_query, image_path=None, retries=3):
             if image_path and os.path.exists(image_path):
                 image_caption = describe_image(image_path)
 
-            combined_query = f"{image_caption}\n\n{cleaned_query}".strip()
+            combined_query = cleaned_query #f"{image_caption}\n\n{cleaned_query}".strip()
             context = "\n".join(search(combined_query)) or "No relevant context found."
             response = generate_response(combined_query, context)
 
