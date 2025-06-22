@@ -85,9 +85,12 @@ def run_pipeline(user_query, image_path=None, retries=3):
     - Log both interaction and audit entry
     - Retry on failure
     """
+    if not user_query or not isinstance(user_query, str):
+        return "Invalid input: Please enter a valid message."
+
     if not moderate_input(user_query):
         return "Your message includes flagged content. Please try again."
-    
+
     cleaned_query = strip_pii(user_query)
 
     if cleaned_query in CACHE:
@@ -95,12 +98,18 @@ def run_pipeline(user_query, image_path=None, retries=3):
 
     for attempt in range(retries):
         try:
-            image_caption = describe_image(image_path) if image_path else ""
+            image_caption = ""
+            if image_path:
+                caption_result = describe_image(image_path)
+                image_caption = caption_result if isinstance(caption_result, str) else ""
+
             combined_query = f"{image_caption}\n\n{cleaned_query}".strip()
             context = "\n".join(search(combined_query)) or "No relevant context found."
             response = generate_response(combined_query, context)
+            
             log_interaction(combined_query, response)
             log_audit_entry(combined_query, response)
+
             CACHE[cleaned_query] = response
             return response
         except Exception as e:
