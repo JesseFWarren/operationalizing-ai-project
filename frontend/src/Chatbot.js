@@ -37,16 +37,26 @@ const Chatbot = () => {
     setIsTyping(true);
 
     try {
-      const formData = new FormData();
-      formData.append("query", question);
-      if (image) formData.append("image", image);
+      let res;
+      if (image) {
+        const formData = new FormData();
+        formData.append("query", question);
+        formData.append("image", image);
 
-      const res = await axios.post(`${BACKEND_URL}/ask_image`, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-          "x-api-key": API_KEY
-        }
-      });
+        res = await axios.post(`${BACKEND_URL}/ask_image`, formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            "x-api-key": API_KEY
+          }
+        });
+      } else {
+        res = await axios.post(`${BACKEND_URL}/ask`, { query: question }, {
+          headers: {
+            "Content-Type": "application/json",
+            "x-api-key": API_KEY
+          }
+        });
+      }
 
       const botMessage = { text: res.data.response, sender: "bot" };
       setTimeout(() => {
@@ -54,6 +64,7 @@ const Chatbot = () => {
         setIsTyping(false);
       }, 1500);
     } catch (error) {
+      console.error("Error:", error);
       setIsTyping(false);
       setMessages((prev) => [
         ...prev,

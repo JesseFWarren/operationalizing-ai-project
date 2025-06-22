@@ -5,7 +5,8 @@ from src.retrieval import search
 from openai import OpenAI
 import boto3
 import re
-from src.model_api import generate_response, MODEL_SOURCE
+#from src.model_api import generate_response, MODEL_SOURCE
+from src.chatbot import generate_response_with_openai as generate_response
 from src.vision_model import describe_image
 
 USE_BEDROCK = False
@@ -66,7 +67,7 @@ def log_audit_entry(user_query, response, path="audit_log.csv"):
         time.strftime("%Y-%m-%d %H:%M:%S"),
         user_query,
         response[:100].replace("\n", " "),
-        MODEL_SOURCE
+        "OpenAI"
     ]
 
     with open(path, mode="a", newline='', encoding="utf-8") as f:
