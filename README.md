@@ -1,7 +1,9 @@
-# operationalizing-ai-project
+# Health Live Chat
 
-**Health Live Chat** is an AI-powered conversational assistant that helps users ask general health-related questions and receive instant, informative answers. It uses large language models (LLMs) to provide context-aware, privacy-conscious, and user-friendly health information responses.
-[HealthLiveChat](https://healthlivechat.onrender.com/)
+**Health Live Chat** is an AI-powered conversational assistant that helps users ask general health-related questions and receive instant, informative answers. It uses large language models (LLMs) to provide context-aware, privacy-conscious, and user-friendly health information responses.  
+[HealthLiveChat](https://healthlivechat.onrender.com/)  
+[5 Minute Presentation]()  
+![HealthLiveChat Screenshot](image/Screenshot.png)
 
 ## Project Goals
 - Build and deploy a conversational health assistant
@@ -59,11 +61,15 @@
 - Record a 5-minute demo video walkthrough of the project
 - Clean and organize code for final submission
 
-### Final Project Summary
-The final version of Health Live Chat includes:
-- A fully functional health Q&A assistant powered by Amazon Bedrock
-- Modular orchestration pipeline with retry and logging
-- Secure deployment with authentication via App Runner
-- Analytics dashboard for usage insights
-- Safety and privacy filters for ethical AI usage
-- Frontend interface and complete documentation
+## Full Documentation
+
+- [Technical Docs and User Manual](./technical_docs_and_user_manual.md)  
+- [Deployment Guide](./deployment_guide.md)  
+- [Security and Responsible AI Practices](./security_and_ethics.md)  
+- [API Reference](./api_docs.md)  
+
+
+## Author
+Jesse Warren  
+Duke University  
+AIPI561 - Operationalizing AI
