@@ -28,7 +28,7 @@ if not rows:
     st.warning("No logs found or audit_log.csv is empty.")
     st.stop()
 
-df = pd.DataFrame(rows, columns=["Timestamp", "Query", "Response", "Model"])
+df = pd.DataFrame(rows, columns=["Timestamp", "Query", "Response", "Model", "ImageCaption"])
 
 col1, col2, col3 = st.columns(3)
 col1.metric("Total Queries", count_queries(rows))
