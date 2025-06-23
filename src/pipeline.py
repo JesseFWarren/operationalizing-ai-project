@@ -47,16 +47,22 @@ def append_to_s3_csv(file_key, row):
     except s3.exceptions.NoSuchKey:
         lines = []
 
-    lines.append(",".join(row))
-    updated_csv = "\n".join(lines)
+    # Convert row to CSV format with proper quoting
+    from io import StringIO
+    buffer = StringIO()
+    writer = csv.writer(buffer, quoting=csv.QUOTE_ALL)
+    writer.writerow(row)
+    lines.append(buffer.getvalue().strip())
 
+    updated_csv = "\n".join(lines)
     s3.put_object(Bucket=S3_BUCKET, Key=file_key, Body=updated_csv.encode("utf-8"))
 
 def log_interaction(user_query, response, path="chatlog.csv"):
     row = [user_query, response, time.strftime("%Y-%m-%d %H:%M:%S")]
 
+    # Local logging
     with open(path, mode="a", newline='', encoding="utf-8") as f:
-        writer = csv.writer(f)
+        writer = csv.writer(f, quoting=csv.QUOTE_ALL)
         writer.writerow(row)
 
     append_to_s3_csv("chatlog.csv", row)
@@ -70,7 +76,7 @@ def log_audit_entry(user_query, response, path="audit_log.csv"):
     ]
 
     with open(path, mode="a", newline='', encoding="utf-8") as f:
-        writer = csv.writer(f)
+        writer = csv.writer(f, quoting=csv.QUOTE_ALL)
         writer.writerow(row)
 
     append_to_s3_csv("audit_log.csv", row)
