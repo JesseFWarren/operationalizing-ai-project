@@ -49,6 +49,8 @@ def average_response_length(rows, unit="words"):
     lengths = []
     for row in rows:
         response = row[2]
+        if not isinstance(response, str):
+            continue  # Skip rows with invalid response values
         if unit == "words":
             lengths.append(len(response.split()))
         elif unit == "chars":
