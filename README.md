@@ -1,7 +1,16 @@
-# operationalizing-ai-project
+# Health Live Chat
 
-**Health Live Chat** is an AI-powered conversational assistant that helps users ask general health-related questions and receive instant, informative answers. It uses large language models (LLMs) to provide context-aware, privacy-conscious, and user-friendly health information responses.
-[HealthLiveChat](https://healthlivechat.onrender.com/)
+**Health Live Chat** is an AI-powered conversational assistant that helps users ask general health-related questions and receive instant, informative answers. It uses large language models (LLMs) to provide context-aware, privacy-conscious, and user-friendly health information responses.  
+[HealthLiveChat](https://healthlivechat.onrender.com/)  
+[5 Minute Presentation](https://www.youtube.com/watch?v=9jJX6KOgGoU)  
+![HealthLiveChat Screenshot](image/Screenshot.png)
+
+## Full Documentation
+
+- [Technical Docs and User Manual](./technical_docs_and_user_manual.md)  
+- [Deployment Guide](./deployment_guide.md)  
+- [Security and Responsible AI Practices](./security_and_ethics.md)  
+- [API Reference](./api_docs.md)  
 
 ## Project Goals
 - Build and deploy a conversational health assistant
@@ -12,39 +21,46 @@
 ## Weekly Breakdown
 
 ### Week 1: Foundational Conversational AI (OpenAI)
-- Implement initial version of the Health Live Chat assistant
-- Use OpenAI GPT model to power health-related conversations
-- Build core message loop and response logic
-- Document basic usage and architecture
+- Implemented initial version of the Health Live Chat assistant
+- Used OpenAI GPT model to power health-related conversations
+- Built core message loop and response logic
+- Documented basic usage and architecture
 
-### Week 2: Modular Pipeline & Bedrock Integration
-- Refactor chatbot into a modular pipeline (`pipeline.py`)
+### Week 2: Modular Pipeline and Bedrock Integration
+- Refactored chatbot into a modular pipeline (`pipeline.py`)
   - Input → moderation → model → logging → output
-- Implement retry logic and logging to `chatlog.csv`
-- Switch from OpenAI to Amazon Bedrock
+- Implemented retry logic and logging to `chatlog.csv`
+- Structured code to easily be switched to bedrock once I recieve access
 
-### Week 3: Enterprise Deployment & Security
-- Deploy the backend using AWS App Runner
-- Add token-based authentication to secure endpoints
-- Create `deployment_guide.md` with setup instructions
-- Begin implementing basic audit logging for user activity
+### Week 3: Enterprise Deployment and Security
+- Deployed the backend using AWS App Runner: Waiting for permission from TA 
+  - Used Render for now
+- Added token-based authentication to secure endpoints
+- Implemented basic audit logging for user activity
 
-### Week 4: Usage Analytics & Dashboard
-- Track key metrics:
+### Week 4: Usage Analytics and Dashboard
+- Tracked key metrics:
   - Number of queries
   - Common keywords
   - Average response length
-- Visualize logs with a basic dashboard (Streamlit + CSV analysis)
-- Export log data for performance tracking
+- Visualized logs with a basic dashboard (Streamlit + CSV analysis)
+- Saved log data to S3 bucket and pulled into Streamlit for performance tracking
 
-### Week 5: Safety Filters & Generative AI Ethics
-- Implement basic content moderation for unsafe inputs
-- Strip PII before sending queries to the model
-- Add disclaimers and tune prompts to reduce hallucination
-- Strengthen user safety and align with Responsible AI practices
+### Week 5: Safety Filters and Generative AI Ethics
+- Implemented basic content moderation for unsafe inputs
+- Striped PII before sending queries to the model
+- Added disclaimers and tuned prompts to reduce hallucination
+- Strengthened user safety and aligned with Responsible AI practices
 
-### Week 6: Final Polish
-- Finalize documentation:
+### Week 6: Caching and Multimodal Integration
+- Implemented Caching
+- Added image/text multi-modal pipeline
+- Created api wrapper
+
+### Final Polish
+- Tied everything into bedrock and apprunner and S3 bucket
+- System Diagram
+- Finalize documentation and how to use guide:
   - `README.md`
   - `api_docs.md`
   - `security_and_ethics.md`
@@ -52,11 +68,7 @@
 - Record a 5-minute demo video walkthrough of the project
 - Clean and organize code for final submission
 
-### Final Project Summary
-The final version of Health Live Chat includes:
-- A fully functional health Q&A assistant powered by Amazon Bedrock
-- Modular orchestration pipeline with retry and logging
-- Secure deployment with authentication via App Runner
-- Analytics dashboard for usage insights
-- Safety and privacy filters for ethical AI usage
-- Frontend interface and complete documentation
+## Author
+Jesse Warren  
+Duke University  
+AIPI561 - Operationalizing AI

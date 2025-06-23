@@ -22,7 +22,7 @@ body {
   display: flex;
   flex-direction: column;
   width: 400px;
-  height: 500px; /* FIXED height so it does NOT grow dynamically */
+  height: 600px; /* Increased height */
   border-radius: 15px;
   overflow: hidden;
   background: white;
@@ -37,7 +37,7 @@ body {
   display: flex;
   flex-direction: column;
   background: #f8f9fa;
-  height: 100%; /* Ensures chat fills the space */
+  height: 100%;
 }
 
 /* User Messages */
@@ -96,22 +96,28 @@ body {
 /* Chat Input Form */
 .chat-form {
   display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
   padding: 12px;
   background: white;
   border-top: 1px solid #ccc;
 }
 
-.chat-form input {
-  flex: 1;
+.chat-form input[type="text"] {
+  flex: 1 1 100%;
   padding: 12px;
   border: 1px solid #ccc;
   border-radius: 8px;
-  outline: none;
+  font-size: 14px;
+}
+
+.chat-form input[type="file"] {
+  flex: 1 1 100%;
   font-size: 14px;
 }
 
 .chat-form button {
-  margin-left: 10px;
+  flex: 1 1 100%;
   padding: 12px 18px;
   background: #007bff;
   color: white;
@@ -124,4 +130,10 @@ body {
 
 .chat-form button:hover {
   background: #0056b3;
+}
+
+.uploaded-img {
+  max-width: 200px;
+  border-radius: 8px;
+  margin-top: 5px;
 }
