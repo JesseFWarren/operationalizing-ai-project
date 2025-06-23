@@ -2,8 +2,15 @@
 
 **Health Live Chat** is an AI-powered conversational assistant that helps users ask general health-related questions and receive instant, informative answers. It uses large language models (LLMs) to provide context-aware, privacy-conscious, and user-friendly health information responses.  
 [HealthLiveChat](https://healthlivechat.onrender.com/)  
-[5 Minute Presentation]()  
+[5 Minute Presentation](https://www.youtube.com/watch?v=9jJX6KOgGoU)  
 ![HealthLiveChat Screenshot](image/Screenshot.png)
+
+## Full Documentation
+
+- [Technical Docs and User Manual](./technical_docs_and_user_manual.md)  
+- [Deployment Guide](./deployment_guide.md)  
+- [Security and Responsible AI Practices](./security_and_ethics.md)  
+- [API Reference](./api_docs.md)  
 
 ## Project Goals
 - Build and deploy a conversational health assistant
@@ -60,14 +67,6 @@
   - `deployment_guide.md`
 - Record a 5-minute demo video walkthrough of the project
 - Clean and organize code for final submission
-
-## Full Documentation
-
-- [Technical Docs and User Manual](./technical_docs_and_user_manual.md)  
-- [Deployment Guide](./deployment_guide.md)  
-- [Security and Responsible AI Practices](./security_and_ethics.md)  
-- [API Reference](./api_docs.md)  
-
 
 ## Author
 Jesse Warren  
